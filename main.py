@@ -1,8 +1,11 @@
 import pygame 
-from damas.constants import RED, SQUARE_SIZE, WIDTH, HEIGHT
+from damas.constants import RED, SQUARE_SIZE, WHITE, WIDTH, HEIGHT
 from damas.game import Game
+from minimax.algorithm import minimax
 
 FPS = 60
+
+DEPTH = 4
 
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Damas')
@@ -20,6 +23,10 @@ def main():
 
     while run:
         clock.tick(FPS)
+
+        if game.turn == WHITE:
+            value, new_board = minimax(game.get_board(), DEPTH, WHITE, game)
+            game.ai_move(new_board)
 
         if game.winner() != None:
             print(game.winner())

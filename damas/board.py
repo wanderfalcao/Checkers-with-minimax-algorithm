@@ -29,6 +29,17 @@ class Board:
             else:
                 self.red_kings += 1 
 
+    def evaluate(self):
+        return self.white_left - self.red_left + (self.white_kings* 0.5 - self.red_kings *0.5)
+
+    def get_all_pieces(self, color):
+        pieces = []
+        for row in self.board:
+            for piece in row:
+                if piece != 0 and piece.color == color:
+                    pieces.append(piece)
+        return pieces
+        
     def get_piece(self, row, col):
         return self.board[row][col]
 
