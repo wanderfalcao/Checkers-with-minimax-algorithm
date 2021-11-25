@@ -1,5 +1,5 @@
 import pygame
-from damas.constants import GREY, RED, CROWN, SQUARE_SIZE
+from checkers.constants import GREY, RED, CROWN, SQUARE_SIZE
 
 class Piece:
     PADDING = 15

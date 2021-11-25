@@ -1,7 +1,7 @@
 import pygame
 
-from damas.constants import BLACK, COLS, RED, ROWS, SQUARE_SIZE, WHITE
-from damas.piece import Piece
+from checkers.constants import BLACK, COLS, RED, ROWS, SQUARE_SIZE, WHITE
+from checkers.piece import Piece
 
 
 
@@ -76,9 +76,9 @@ class Board:
     
     def winner(self):
         if self.red_left <= 0:
-            return WHITE
+            return "WHITE"
         elif self.white_left <= 0:
-            return RED
+            return "RED"
         
         return None 
     
