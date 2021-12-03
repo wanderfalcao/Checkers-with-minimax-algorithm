@@ -1,7 +1,7 @@
 import pygame
 
-from damas.board import Board
-from damas.constants import BLUE, RED, SQUARE_SIZE, WHITE
+from checkers.board import Board
+from checkers.constants import BLUE, RED, SQUARE_SIZE, WHITE
 
 
 class Game:
