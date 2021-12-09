@@ -1,6 +1,6 @@
 from copy import deepcopy
 import pygame
-from damas.constants import GREEN, RED, WHITE
+from checkers.constants import GREEN, DARK_BROWN, LIGHT_GREY
 
 def minimax(position, depth, max_player, game):
     if depth == 0 or position.winner() != None:
@@ -9,7 +9,7 @@ def minimax(position, depth, max_player, game):
     if max_player:
         maxEval = float('-inf') #Negative infinity
         best_move = None
-        for move in get_all_moves(position, WHITE, game):
+        for move in get_all_moves(position, LIGHT_GREY, game):
             evaluation = minimax(move, depth-1, False, game)[0]
             maxEval = max(maxEval, evaluation)
             if maxEval == evaluation:
@@ -18,7 +18,7 @@ def minimax(position, depth, max_player, game):
     else:
         minEval = float('inf') #Positive infinity
         best_move = None
-        for move in get_all_moves(position, RED, game):
+        for move in get_all_moves(position, DARK_BROWN, game):
             evaluation = minimax(move, depth-1, True, game)[0]
             minEval = min(minEval, evaluation)
             if minEval == evaluation:
@@ -31,7 +31,7 @@ def get_all_moves(board, color, game):
     for piece in board.get_all_pieces(color):
         valid_moves = board.get_valid_moves(piece)
         for move, skip in valid_moves.items():
-            # draw_moves(game, board, piece)
+            #draw_moves(game, board, piece)
             temp_board = deepcopy(board)
             temp_piece = temp_board.get_piece(piece.row, piece.col)
             new_board = simulate_move(temp_piece, move, temp_board, game, skip)

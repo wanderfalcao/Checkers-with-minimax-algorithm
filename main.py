@@ -1,14 +1,14 @@
 import pygame 
-from damas.constants import RED, SQUARE_SIZE, WHITE, WIDTH, HEIGHT
-from damas.game import Game
+
+from checkers.constants import DARK_BROWN, SQUARE_SIZE, LIGHT_GREY, WIDTH, HEIGHT
+from checkers.game import Game
 from minimax.algorithm import minimax
 
 FPS = 60
 
 DEPTH = 4
-
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('Damas')
+pygame.display.set_caption('checkers')
 
 def get_row_col_from_mouse(pos):
     x, y = pos
@@ -24,8 +24,8 @@ def main():
     while run:
         clock.tick(FPS)
 
-        if game.turn == WHITE:
-            value, new_board = minimax(game.get_board(), DEPTH, WHITE, game)
+        if game.turn == LIGHT_GREY:
+            value, new_board = minimax(game.get_board(), DEPTH, LIGHT_GREY, game)
             game.ai_move(new_board)
 
         if game.winner() != None:

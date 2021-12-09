@@ -1,22 +1,20 @@
 import pygame
 
-from checkers.constants import BLACK, COLS, RED, ROWS, SQUARE_SIZE, WHITE
+from checkers.constants import BROWN,LIGHT_BROWN, COLS, DARK_BROWN, ROWS, SQUARE_SIZE, LIGHT_GREY
 from checkers.piece import Piece
-
-
 
 class Board:
     def __init__(self):
         self.board = []
-        self.red_left = self.white_left = 12
-        self.red_kings = self.white_kings = 0
+        self.DARK_BROWN_left = self.LIGHT_GREY_left = 12
+        self.DARK_BROWN_kings = self.LIGHT_GREY_kings = 0
         self.create_board()
     
     def draw_squares(self, window):
-        window.fill(BLACK)
+        window.fill(BROWN)
         for row in range(ROWS):
             for col in range(row % 2, COLS, 2):
-                pygame.draw.rect(window, RED, (row*SQUARE_SIZE, col *SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+                pygame.draw.rect(window, LIGHT_BROWN, (row*SQUARE_SIZE, col *SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
     def move(self, piece, row, col):
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
@@ -24,13 +22,13 @@ class Board:
 
         if row == ROWS - 1 or row == 0:
             piece.make_king()
-            if piece.color == WHITE:
-                self.white_kings += 1
+            if piece.color == LIGHT_GREY:
+                self.LIGHT_GREY_kings += 1
             else:
-                self.red_kings += 1 
+                self.DARK_BROWN_kings += 1 
 
     def evaluate(self):
-        return self.white_left - self.red_left + (self.white_kings* 0.5 - self.red_kings *0.5)
+        return self.LIGHT_GREY_left - self.DARK_BROWN_left + (self.LIGHT_GREY_kings* 0.5 - self.DARK_BROWN_kings *0.5)
 
     def get_all_pieces(self, color):
         pieces = []
@@ -49,9 +47,9 @@ class Board:
             for col in range(COLS):
                 if col % 2 == ((row +  1) % 2):
                     if row < 3:
-                        self.board[row].append(Piece(row, col, WHITE))
+                        self.board[row].append(Piece(row, col, LIGHT_GREY))
                     elif row > 4:
-                        self.board[row].append(Piece(row, col, RED))
+                        self.board[row].append(Piece(row, col, DARK_BROWN))
                     else:
                         self.board[row].append(0)
                 else:
@@ -69,16 +67,16 @@ class Board:
         for piece in pieces:
             self.board[piece.row][piece.col] = 0
             if piece != 0:
-                if piece.color == RED:
-                    self.red_left -= 1
+                if piece.color == DARK_BROWN:
+                    self.DARK_BROWN_left -= 1
                 else:
-                    self.white_left -= 1
+                    self.LIGHT_GREY_left -= 1
     
     def winner(self):
-        if self.red_left <= 0:
-            return "WHITE"
-        elif self.white_left <= 0:
-            return "RED"
+        if self.DARK_BROWN_left <= 0:
+            return "LIGHT GREY(AI) is the winner"
+        elif self.LIGHT_GREY_left <= 0:
+            return "DARK BROWN(Human) is the winner"
         
         return None 
     
@@ -88,10 +86,10 @@ class Board:
         right = piece.col + 1
         row = piece.row
 
-        if piece.color == RED or piece.king:
+        if piece.color == DARK_BROWN or piece.king:
             moves.update(self._traverse_left(row -1, max(row-3, -1), -1, piece.color, left))
             moves.update(self._traverse_right(row -1, max(row-3, -1), -1, piece.color, right))
-        if piece.color == WHITE or piece.king:
+        if piece.color == LIGHT_GREY or piece.king:
             moves.update(self._traverse_left(row +1, min(row+3, ROWS), 1, piece.color, left))
             moves.update(self._traverse_right(row +1, min(row+3, ROWS), 1, piece.color, right))
     
